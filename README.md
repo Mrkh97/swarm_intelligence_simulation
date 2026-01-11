@@ -210,21 +210,3 @@ python main.py --mode train --config configs/experiment_1.yaml
 ### Checkpoint'lerden Devam Etme
 Model checkpoint'leri otomatik olarak kaydedilir (`save_frequency: 100`). Training'i kesip daha sonra devam ettirebilirsiniz.
 
-### Custom Environment
-`src/environment/exploration_env.py` dosyasını düzenleyerek:
-- Farklı reward yapıları
-- Farklı grid boyutları
-- 3D ortam (z ekseni ekleyerek)
-- Dinamik engeller
-
-## Lisans
-
-Bu proje eğitim amaçlıdır.
-
-## Katkıda Bulunma
-
-Bu bir prototip proje olduğundan, iyileştirme önerileri ve katkılar memnuniyetle karşılanır.
-
-## İletişim
-
-Sorularınız için issue açabilirsiniz.
