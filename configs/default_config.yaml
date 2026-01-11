@@ -1,0 +1,99 @@
+# Swarm Intelligence Simulation - Configuration File
+
+# Environment Settings
+environment:
+  grid_size: 25  # Grid boyutu (25x25)
+  num_agents: 5  # Robot sayısı
+  num_obstacles: 15  # Engel sayısı
+  communication_range: 5.0  # Robotlar arası iletişim menzili
+  max_steps: 200  # Episode başına maksimum adım
+  obstacle_density: 0.1  # Engel yoğunluğu (0.0 - 1.0)
+  
+# Agent Settings
+agent:
+  view_range: 3  # Agent'ın görebildiği mesafe
+  action_space_size: 5  # (Up, Down, Left, Right, Stay)
+  
+# Model Architecture
+model:
+  # Actor Network
+  actor_hidden_dims: [128, 128]  # Hidden layer boyutları
+  actor_lr: 0.0001  # Actor learning rate
+  
+  # Critic Network
+  critic_hidden_dims: [256, 256]
+  critic_lr: 0.001  # Critic learning rate
+  
+  # GNN Settings
+  gnn_hidden_dim: 64
+  gnn_num_layers: 2
+  gnn_heads: 4  # Multi-head attention için
+  
+  # General
+  gamma: 0.99  # Discount factor
+  tau: 0.01  # Soft update parameter
+  
+# Training Settings
+training:
+  num_episodes: 2000  # Toplam episode sayısı
+  batch_size: 256  # Replay buffer batch size
+  buffer_size: 100000  # Replay buffer kapasitesi
+  warmup_steps: 1000  # Random exploration adımları
+  update_frequency: 100  # Her kaç adımda bir update
+  target_update_frequency: 100  # Target network update frekansı
+  
+  # Exploration
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  
+  # Checkpointing
+  save_frequency: 100  # Her kaç episode'da model kaydet
+  
+# Rewards
+rewards:
+  exploration: 1.0  # Yeni alan keşfi için ödül
+  collision: -0.5  # Engel/robot çarpışma cezası
+  step: -0.01  # Her adım için küçük ceza (efficiency için)
+  collective_bonus: 2.0  # Tüm robotların koordineli keşif bonusu
+  redundant_exploration: -0.1  # Zaten keşfedilmiş alana gitme cezası
+  
+# Visualization Settings
+visualization:
+  enabled: true
+  render_train: false  # Training sırasında render (yavaşlatır)
+  render_test: true  # Test sırasında render
+  render_frequency: 100  # Train'de her kaç episode'da render
+  fps: 10  # Pygame FPS
+  cell_size: 30  # Her grid cell'in pixel boyutu
+  
+  # Colors (RGB)
+  colors:
+    background: [255, 255, 255]
+    grid_line: [200, 200, 200]
+    obstacle: [50, 50, 50]
+    unexplored: [240, 240, 240]
+    explored: [180, 220, 180]
+    robot: [70, 130, 180]
+    communication_range: [200, 200, 255, 50]  # RGBA
+    
+# Logging Settings
+logging:
+  tensorboard: true
+  log_dir: "results/logs"
+  print_frequency: 10  # Her kaç episode'da console'a yazdır
+  
+# Evaluation Settings
+evaluation:
+  num_episodes: 100  # Test için episode sayısı
+  render: true
+  save_videos: false  # Video kaydetme (çok yer kaplar)
+  metrics:
+    - "total_exploration_rate"
+    - "average_reward"
+    - "collision_rate"
+    - "coverage_efficiency"
+    - "communication_count"
+
+# Seed for reproducibility
+seed: 42
